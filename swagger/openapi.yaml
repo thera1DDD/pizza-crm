@@ -1,0 +1,118 @@
+openapi: 3.0.0
+info:
+  title: Pizza Order Management API
+  version: 1.0.0
+  description: API для управлввввывывения заказами в пиццерии.
+
+paths:
+  /orders:
+    post:
+      summary: Создать новый заказ
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                items:
+                  type: array
+                  items:
+                    type: integer
+              required:
+                - items
+      responses:
+        '200':
+          description: Заказ создан
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  order_id:
+                    type: string
+                  items:
+                    type: array
+                    items:
+                      type: integer
+                  done:
+                    type: boolean
+  /orders/{order_id}:
+    get:
+      summary: Получить информацию о заказе
+      parameters:
+        - in: path
+          name: order_id
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Информация по заказу
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  order_id:
+                    type: string
+                  items:
+                    type: array
+                    items:
+                      type: integer
+                  done:
+                    type: boolean
+  /orders/{order_id}/items:
+    post:
+      summary: Добавить товары в заказ
+      parameters:
+        - in: path
+          name: order_id
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: integer
+      responses:
+        '200':
+          description: Товары добавлены
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  order_id:
+                    type: string
+                  items:
+                    type: array
+                    items:
+                      type: integer
+                  done:
+                    type: boolean
+  /orders/{order_id}/done:
+    post:
+      summary: Пометить заказ как выполненный
+      parameters:
+        - in: path
+          name: order_id
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Заказ помечен как выполненный
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  order_id:
+                    type: string
+                  done:
+                    type: boolean
